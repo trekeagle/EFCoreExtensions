@@ -9,9 +9,21 @@ namespace CodeTreker.Utils.DB
 {
     public class GeneralDbContext : DbContext
     {
+
+        private string _connectonStrName;
+
+        public GeneralDbContext(string connectonStrName = null)
+        {
+            _connectonStrName = connectonStrName;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(ConfigManager.GetInstance().Configuration.GetConnectionString("DefaultConnection"));
+            if (string.IsNullOrEmpty(_connectonStrName))
+            {
+                _connectonStrName = "DefaultConnection";
+            }
+            options.UseSqlServer(ConfigManager.GetInstance().Configuration.GetConnectionString(_connectonStrName));
         }
 
     }
