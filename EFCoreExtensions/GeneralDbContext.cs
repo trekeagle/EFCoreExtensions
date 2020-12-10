@@ -11,7 +11,7 @@ namespace CodeTreker.Utils.DB
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(ConfigManager.Configuration.GetConnectionString("DefaultConnection"));
+            options.UseSqlServer(ConfigManager.GetInstance().Configuration.GetConnectionString("DefaultConnection"));
         }
 
     }

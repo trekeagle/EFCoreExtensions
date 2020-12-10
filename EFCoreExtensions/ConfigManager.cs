@@ -13,18 +13,22 @@ namespace CodeTreker.Utils
     /// </summary>
     public class ConfigManager
     {
-        public static IConfiguration Configuration { get; set; }
-
-        static ConfigManager()
+        #region 单例模式
+        private static ConfigManager instance = new ConfigManager();
+        private ConfigManager() { }
+        public static ConfigManager GetInstance(string appsettingsJsonFilePath = null)
         {
-
+            if (string.IsNullOrEmpty(appsettingsJsonFilePath))
+            {
+                appsettingsJsonFilePath = "appsettings.json";
+            }
 
             #region 读取json配置文件
-            Configuration = new ConfigurationBuilder()
-                .Add(new JsonConfigurationSource
-                {
-                    Path = "appsettings.json",
-                    ReloadOnChange = true //ReloadOnChange = true 指示appsettings.json被修改后会重新加载
+            instance.Configuration = new ConfigurationBuilder()
+                 .Add(new JsonConfigurationSource
+                 {
+                     Path = appsettingsJsonFilePath,
+                     ReloadOnChange = true //ReloadOnChange = true 指示appsettings.json被修改后会重新加载
                 }).Build();
 
             #endregion
@@ -36,7 +40,12 @@ namespace CodeTreker.Utils
             //    .AddJsonFile("appsettings.json").Build();
 
             #endregion
+            return instance;
         }
+        #endregion
+        public IConfiguration Configuration { get; set; }
+
+
 
     }
 }
