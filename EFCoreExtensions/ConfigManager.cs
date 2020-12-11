@@ -14,7 +14,7 @@ namespace CodeTreker.Utils
     public class ConfigManager
     {
         #region 单例模式
-        private static ConfigManager instance = new ConfigManager();
+        private static readonly ConfigManager instance = new ConfigManager();
         private ConfigManager() { }
         public static ConfigManager GetInstance(string appsettingsJsonFilePath = null)
         {
